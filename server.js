@@ -21,7 +21,7 @@ const calendar = ical({
   name: 'Calza Events',
   description: 'Personalized events from Instagram',
   timezone: 'America/New_York',
-  ttl: 60 * 60 * 24 // 24 hours
+  ttl: 60 * 5 // 5 minutes
 });
 
 // Generate iCalendar feed
@@ -68,7 +68,8 @@ app.get('/calendar.ics', (req, res) => {
     
     // Set proper headers for calendar subscription
     res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
-    res.setHeader('Cache-Control', 'public, max-age=3600'); // Cache for 1 hour
+    res.setHeader('Cache-Control', 'public, max-age=300'); // Cache for 5 minutes
+    res.setHeader('Last-Modified', new Date().toUTCString());
     res.setHeader('X-Content-Type-Options', 'nosniff');
     
     res.send(icsContent);

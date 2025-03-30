@@ -175,7 +175,7 @@ const events = [
     location_name: "The Writers Room",
     location_address: "740 Broadway, New York, NY",
     neighborhood: "Union Square",
-    personalized_title: "Unlock your writing potential...",
+    personalized_title: "Unlock your writing potential Jake...",
     calendar_title: "Unlock your writing potential..."
   },
   {
