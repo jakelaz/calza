@@ -21,7 +21,7 @@ const calendar = ical({
   name: 'Calza Events',
   description: 'Personalized events from Instagram',
   timezone: 'America/New_York',
-  ttl: 60 * 5 // 5 minutes
+  ttl: 60 // 1 minute
 });
 
 // Generate iCalendar feed
@@ -62,7 +62,14 @@ const generateCalendarFeed = (events) => {
       ],
       // Enable native RSVP
       rsvp: true,
-      rsvpStatus: 'NEEDS-ACTION'
+      rsvpStatus: 'NEEDS-ACTION',
+      // Add these properties for better RSVP support
+      class: 'PUBLIC',
+      transparency: 'TRANSPARENT',
+      // Add a unique identifier for each event
+      uid: `calza-${event.event_id}@calza.app`,
+      // Add a link to the event
+      url: `https://calza.app/events/${event.event_id}`
     });
   });
 
@@ -79,11 +86,25 @@ app.get('/calendar.ics', (req, res) => {
     const events = loadEvents();
     const icsContent = generateCalendarFeed(events);
     
+    // Generate ETag based on content hash
+    const etag = require('crypto')
+      .createHash('md5')
+      .update(icsContent)
+      .digest('hex');
+    
     // Set proper headers for calendar subscription
     res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
-    res.setHeader('Cache-Control', 'public, max-age=300'); // Cache for 5 minutes
+    res.setHeader('Cache-Control', 'public, max-age=60, must-revalidate'); // Cache for 1 minute, must revalidate
     res.setHeader('Last-Modified', new Date().toUTCString());
+    res.setHeader('ETag', `"${etag}"`);
     res.setHeader('X-Content-Type-Options', 'nosniff');
+    
+    // Check if client's cached version matches
+    const ifNoneMatch = req.headers['if-none-match'];
+    if (ifNoneMatch && ifNoneMatch === `"${etag}"`) {
+      res.status(304).end(); // Not Modified
+      return;
+    }
     
     res.send(icsContent);
   } catch (error) {
