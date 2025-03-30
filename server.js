@@ -57,7 +57,7 @@ const generateCalendarFeed = (events) => {
         {
           email: 'events@calza.app',
           name: 'Calza',
-          role: 'ORGANIZER'
+          role: 'CHAIR'
         }
       ],
       // Enable native RSVP
