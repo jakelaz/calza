@@ -179,7 +179,7 @@ const events = [
     location_name: "@nyc_dance",
     neighborhood: "Times Square",
     personalized_title: "Dance the night away...",
-    calendar_title: "Dance the night away..."
+    calendar_title: "Dance the night away, Jake..."
   },
   {
     event_id: "evt_015",
