@@ -3,7 +3,11 @@ const app = express();
 const ical = require('ical-generator').default;
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
+const path = require('path');
 const events = require('./events');
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Load your event data from a CSV file
 const loadEvents = () => {
@@ -53,6 +57,10 @@ const generateCalendarFeed = (events) => {
 };
 
 // Set up Express routes
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.get('/calendar.ics', (req, res) => {
   try {
     const events = loadEvents();

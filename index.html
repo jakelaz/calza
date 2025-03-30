@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calza Calendar - NYC Events</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .subscription-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+        .button:hover {
+            opacity: 0.9;
+        }
+        .google {
+            background-color: #4285f4;
+        }
+        .apple {
+            background-color: #000;
+        }
+        .outlook {
+            background-color: #0078d4;
+        }
+        .manual {
+            background-color: #666;
+        }
+        .features {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+        .features h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+        .features li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .features li:before {
+            content: "•";
+            color: #4285f4;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calza Calendar - NYC Events</h1>
+        <p class="description">
+            Subscribe to get personalized NYC events delivered directly to your calendar. 
+            We curate the best events across fitness, food, art, music, and more.
+        </p>
+        
+        <div class="subscription-buttons">
+            <a href="https://calendar.google.com/calendar/r?cid=https://calza-calendar-api.onrender.com/calendar.ics" class="button google">
+                Subscribe with Google Calendar
+            </a>
+            <a href="webcal://calza-calendar-api.onrender.com/calendar.ics" class="button apple">
+                Subscribe with Apple Calendar
+            </a>
+            <a href="https://outlook.live.com/calendar/0/addcalendar?url=https://calza-calendar-api.onrender.com/calendar.ics" class="button outlook">
+                Subscribe with Outlook
+            </a>
+            <a href="https://calza-calendar-api.onrender.com/calendar.ics" class="button manual">
+                Manual Subscription
+            </a>
+        </div>
+
+        <div class="features">
+            <h2>What's Included</h2>
+            <ul>
+                <li>Curated NYC events across multiple categories</li>
+                <li>Events from trusted local sources</li>
+                <li>Automatic updates when new events are added</li>
+                <li>Works with all major calendar apps</li>
+                <li>Free to subscribe</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 
