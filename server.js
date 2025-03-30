@@ -49,7 +49,20 @@ const generateCalendarFeed = (events) => {
       organizer: {
         name: 'Calza',
         email: 'events@calza.app'
-      }
+      },
+      // Add native RSVP functionality
+      method: 'REQUEST',
+      sequence: 0,
+      attendees: [
+        {
+          email: 'events@calza.app',
+          name: 'Calza',
+          role: 'ORGANIZER'
+        }
+      ],
+      // Enable native RSVP
+      rsvp: true,
+      rsvpStatus: 'NEEDS-ACTION'
     });
   });
 
