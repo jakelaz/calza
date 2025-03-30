@@ -190,7 +190,7 @@ const events = [
     location_address: "28 W 23rd St, New York, NY",
     neighborhood: "Flatiron",
     personalized_title: "Sweat session that delivers...",
-    calendar_title: "This is an event title..."
+    calendar_title: "This is a new event title..."
   },
   {
     event_id: "evt_015",
