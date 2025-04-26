@@ -33,13 +33,13 @@ const generateCalendarFeed = (events) => {
   events.forEach(event => {
     calendar.createEvent({
       id: event.event_id,
-      summary: event.calendar_title,
-      description: `${event.description}\n\nSource: ${event.source}\nNeighborhood: ${event.neighborhood}`,
+      summary: event.personalized_title,
+      description: event.personalized_description,
       start: new Date(event.start_datetime),
       end: new Date(event.end_datetime),
       location: {
-        title: event.location_name,
-        address: event.location_address
+        title: `${event.location_name} - ${event.neighborhood}`,
+        address: event.location_address || `${event.neighborhood}, New York, NY`
       },
       categories: [{
         name: event.event_type
@@ -69,7 +69,7 @@ const generateCalendarFeed = (events) => {
       // Add a unique identifier for each event
       uid: `calza-${event.event_id}@calza.app`,
       // Add a link to the event
-      url: `https://calza.app/events/${event.event_id}`
+      url: event.url
     });
   });
 

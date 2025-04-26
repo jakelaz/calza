@@ -1,251 +1,246 @@
+// Function to generate personalized titles based on a customizable prompt
+const generatePersonalizedTitle = (event, prompt) => {
+  // Default prompt if none provided
+  const defaultPrompt = "Create a conversational, standalone title for this event that would make sense in a calendar without context. Make it engaging but not overly casual. Avoid ellipsis.";
+  
+  // Use the provided prompt or default
+  const titlePrompt = prompt || defaultPrompt;
+  
+  // This is a placeholder for the actual implementation
+  // In a real app, this would call an AI service or use a template system
+  // For now, we'll use a simple transformation based on event type
+  
+  let personalizedTitle = event.original_title;
+  
+  // Remove ellipsis
+  personalizedTitle = personalizedTitle.replace(/\.\.\.$/, '');
+  
+  // Add a conversational prefix based on event type
+  switch(event.original_event_type) {
+    case 'art':
+      personalizedTitle = `Check out ${personalizedTitle}`;
+      break;
+    case 'music':
+      personalizedTitle = `Listen to ${personalizedTitle}`;
+      break;
+    case 'food':
+      personalizedTitle = `Taste ${personalizedTitle}`;
+      break;
+    case 'entertainment':
+      personalizedTitle = `Experience ${personalizedTitle}`;
+      break;
+    case 'fitness':
+      personalizedTitle = `Join ${personalizedTitle}`;
+      break;
+    case 'education':
+      personalizedTitle = `Learn at ${personalizedTitle}`;
+      break;
+    case 'wellness':
+      personalizedTitle = `Relax with ${personalizedTitle}`;
+      break;
+    case 'community':
+      personalizedTitle = `Connect at ${personalizedTitle}`;
+      break;
+    case 'business':
+      personalizedTitle = `Network at ${personalizedTitle}`;
+      break;
+    default:
+      personalizedTitle = `Don't miss ${personalizedTitle}`;
+  }
+  
+  return personalizedTitle;
+};
+
+// Function to generate personalized descriptions
+const generatePersonalizedDescription = (event) => {
+  // Extract the Instagram handle from the source
+  const instagramHandle = event.original_source;
+  
+  // Create Instagram profile URL
+  const instagramUrl = `https://instagram.com/${instagramHandle.substring(1)}`;
+  
+  // Create a personalized description with the specified structure
+  return `We're showing you this because you follow ${instagramHandle}\n\n${event.original_description}\n\nLocation: ${event.original_location_name}\n${event.original_location_address}\n\nVisit ${instagramHandle} on Instagram: ${instagramUrl}`;
+};
+
 const events = [
   {
-    event_id: "evt_001",
-    source: "@nyc_rooftop",
-    event_type: "social",
-    title: "Sunset vibes at 230 Fifth...",
-    description: "We're showing you this because you follow @nyc_rooftop\n\nUnwind with craft cocktails and stunning city views. Live DJ from 6-9 PM.\n\nLocation: The Rooftop at 230 Fifth\n230 Fifth Ave, New York, NY",
-    start_datetime: "2025-04-02T17:00:00",
-    end_datetime: "2025-04-02T21:00:00",
-    location_name: "@nyc_rooftop",
-    neighborhood: "Flatiron",
-    personalized_title: "Sunset vibes at 230 Fifth...",
-    calendar_title: "Sunset vibes at 230 Fifth..."
+    // Original data fields
+    original_event_id: "evt_001",
+    original_source: "@tlstudio_nyc",
+    original_event_type: "art",
+    original_title: "The Space Between Knowing...",
+    original_description: "Exhibition curated by Naomi Lev featuring works by Shony Rivnay exploring the spaces and energies between things.",
+    original_start_datetime: "2025-05-03T00:00:00",
+    original_end_datetime: "2025-05-27T23:59:59",
+    original_location_name: "@tlstudio_nyc",
+    original_location_address: "102 Franklin Street, #2, New York, NY 10013",
+    original_neighborhood: "Tribeca",
+    original_url: "https://instagram.com/tlstudio_nyc",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Explore this new exhibition",
+    personalized_description: "We're showing you this because you follow @tlstudio_nyc\n\nExhibition curated by Naomi Lev featuring works by Shony Rivnay exploring the spaces and energies between things.\n\nLocation: @tlstudio_nyc\n102 Franklin Street, #2, New York, NY 10013\n\nVisit @tlstudio_nyc on Instagram: https://instagram.com/tlstudio_nyc",
+    personalized_url: "https://instagram.com/tlstudio_nyc"
   },
   {
-    event_id: "evt_002",
-    source: "@nyc_food_fest",
-    event_type: "food",
-    title: "Foodie paradise in Brooklyn...",
-    description: "We're showing you this because you follow @nyc_food_fest\n\nSample dishes from 50+ local restaurants. Live cooking demos and food trucks.\n\nLocation: Brooklyn Bridge Park\n334 Furman St, Brooklyn, NY",
-    start_datetime: "2025-04-04T11:00:00",
-    end_datetime: "2025-04-04T19:00:00",
-    location_name: "@nyc_food_fest",
-    neighborhood: "Brooklyn Heights",
-    personalized_title: "Foodie paradise in Brooklyn...",
-    calendar_title: "Foodie paradise in Brooklyn..."
+    // Original data fields
+    original_event_id: "evt_002",
+    original_source: "@tlstudio_nyc",
+    original_event_type: "art",
+    original_title: "Opening Reception: The Space Between...",
+    original_description: "Opening reception for The Space Between Knowing exhibition.",
+    original_start_datetime: "2025-05-03T18:00:00",
+    original_end_datetime: "2025-05-03T21:00:00",
+    original_location_name: "@tlstudio_nyc",
+    original_location_address: "102 Franklin Street, #2, New York, NY 10013",
+    original_neighborhood: "Tribeca",
+    original_url: "https://instagram.com/tlstudio_nyc",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Celebrate this gallery opening",
+    personalized_description: "We're showing you this because you follow @tlstudio_nyc\n\nOpening reception for The Space Between Knowing exhibition.\n\nLocation: @tlstudio_nyc\n102 Franklin Street, #2, New York, NY 10013\n\nVisit @tlstudio_nyc on Instagram: https://instagram.com/tlstudio_nyc",
+    personalized_url: "https://instagram.com/tlstudio_nyc"
   },
   {
-    event_id: "evt_003",
-    source: "@nyc_comedy",
-    event_type: "entertainment",
-    title: "Laughs guaranteed at Comedy Cellar...",
-    description: "We're showing you this because you follow @nyc_comedy\n\nFeaturing top NYC comedians. Two drink minimum, 21+.\n\nLocation: The Comedy Cellar\n117 MacDougal St, New York, NY",
-    start_datetime: "2025-04-05T20:00:00",
-    end_datetime: "2025-04-05T22:00:00",
-    location_name: "@nyc_comedy",
-    neighborhood: "Greenwich Village",
-    personalized_title: "Laughs guaranteed at Comedy Cellar...",
-    calendar_title: "Laughs guaranteed at Comedy Cellar..."
+    // Original data fields
+    original_event_id: "evt_003",
+    original_source: "@tlstudio_nyc",
+    original_event_type: "art",
+    original_title: "Dance Performance: The Space Between...",
+    original_description: "Dance performance as part of The Space Between Knowing exhibition.",
+    original_start_datetime: "2025-05-17T18:00:00",
+    original_end_datetime: "2025-05-17T21:00:00",
+    original_location_name: "@tlstudio_nyc",
+    original_location_address: "102 Franklin Street, #2, New York, NY 10013",
+    original_neighborhood: "Tribeca",
+    original_url: "https://instagram.com/tlstudio_nyc",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Experience this dance performance",
+    personalized_description: "We're showing you this because you follow @tlstudio_nyc\n\nDance performance as part of The Space Between Knowing exhibition.\n\nLocation: @tlstudio_nyc\n102 Franklin Street, #2, New York, NY 10013\n\nVisit @tlstudio_nyc on Instagram: https://instagram.com/tlstudio_nyc",
+    personalized_url: "https://instagram.com/tlstudio_nyc"
   },
   {
-    event_id: "evt_004",
-    source: "@nyc_art_gallery",
-    event_type: "art",
-    title: "Art that captures the city...",
-    description: "We're showing you this because you follow @nyc_art_gallery\n\nOpening reception for 'Urban Perspectives' featuring NYC street photography.\n\nLocation: Gagosian Gallery\n555 W 24th St, New York, NY",
-    start_datetime: "2025-04-06T18:00:00",
-    end_datetime: "2025-04-06T21:00:00",
-    location_name: "@nyc_art_gallery",
-    neighborhood: "Chelsea",
-    personalized_title: "Art that captures the city...",
-    calendar_title: "Art that captures the city..."
+    // Original data fields
+    original_event_id: "evt_004",
+    original_source: "@tlstudio_nyc",
+    original_event_type: "art",
+    original_title: "Artist Talk: Shony Rivnay...",
+    original_description: "Conversation with the artist Shony Rivnay for The Space Between Knowing exhibition.",
+    original_start_datetime: "2025-05-21T18:00:00",
+    original_end_datetime: "2025-05-21T20:00:00",
+    original_location_name: "@tlstudio_nyc",
+    original_location_address: "102 Franklin Street, #2, New York, NY 10013",
+    original_neighborhood: "Tribeca",
+    original_url: "https://instagram.com/tlstudio_nyc",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Listen to this artist talk",
+    personalized_description: "We're showing you this because you follow @tlstudio_nyc\n\nConversation with the artist Shony Rivnay for The Space Between Knowing exhibition.\n\nLocation: @tlstudio_nyc\n102 Franklin Street, #2, New York, NY 10013\n\nVisit @tlstudio_nyc on Instagram: https://instagram.com/tlstudio_nyc",
+    personalized_url: "https://instagram.com/tlstudio_nyc"
   },
   {
-    event_id: "evt_005",
-    source: "@nyc_yoga",
-    event_type: "fitness",
-    title: "Morning zen in the park...",
-    description: "We're showing you this because you follow @nyc_yoga\n\nStart your day with an energizing yoga session overlooking the park.\n\nLocation: Central Park Great Lawn\nCentral Park, New York, NY",
-    start_datetime: "2025-04-07T06:30:00",
-    end_datetime: "2025-04-07T08:00:00",
-    location_name: "@nyc_yoga",
-    neighborhood: "Upper West Side",
-    personalized_title: "Morning zen in the park...",
-    calendar_title: "Morning zen in the park..."
+    // Original data fields
+    original_event_id: "evt_005",
+    original_source: "@cassette_nyc",
+    original_event_type: "music",
+    original_title: "People I Love & Spellbinder...",
+    original_description: "Live music event featuring People I Love and Spellbinder, with opening acts Oddly Knocky and Blums.",
+    original_start_datetime: "2025-05-22T20:00:00",
+    original_end_datetime: "2025-05-23T01:00:00",
+    original_location_name: "@cassette_nyc",
+    original_location_address: "Cassette, New York City, NY",
+    original_neighborhood: "New York City",
+    original_url: "https://instagram.com/cassette_nyc",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Dance to live music",
+    personalized_description: "We're showing you this because you follow @cassette_nyc\n\nLive music event featuring People I Love and Spellbinder, with opening acts Oddly Knocky and Blums.\n\nLocation: @cassette_nyc\nCassette, New York City, NY\n\nVisit @cassette_nyc on Instagram: https://instagram.com/cassette_nyc",
+    personalized_url: "https://instagram.com/cassette_nyc"
   },
   {
-    event_id: "evt_006",
-    source: "@nyc_music",
-    event_type: "music",
-    title: "New music discovery night...",
-    description: "We're showing you this because you follow @nyc_music\n\nFive up-and-coming indie bands performing live. Doors at 7 PM.\n\nLocation: Bowery Ballroom\n6 Delancey St, New York, NY",
-    start_datetime: "2025-04-08T19:30:00",
-    end_datetime: "2025-04-08T23:00:00",
-    location_name: "@nyc_music",
-    neighborhood: "Lower East Side",
-    personalized_title: "New music discovery night...",
-    calendar_title: "New music discovery night..."
+    // Original data fields
+    original_event_id: "evt_006",
+    original_source: "@gallery_nyc",
+    original_event_type: "art",
+    original_title: "Jared Buckhiester Exhibition...",
+    original_description: "Opening of Jared Buckhiester's next solo exhibition at the gallery's New York location.",
+    original_start_datetime: "2025-11-01T00:00:00",
+    original_end_datetime: "2025-11-30T23:59:59",
+    original_location_name: "@gallery_nyc",
+    original_location_address: "Gallery NYC, New York City, NY",
+    original_neighborhood: "New York City",
+    original_url: "https://instagram.com/gallery_nyc",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Discover this gallery exhibition",
+    personalized_description: "We're showing you this because you follow @gallery_nyc\n\nOpening of Jared Buckhiester's next solo exhibition at the gallery's New York location.\n\nLocation: @gallery_nyc\nGallery NYC, New York City, NY\n\nVisit @gallery_nyc on Instagram: https://instagram.com/gallery_nyc",
+    personalized_url: "https://instagram.com/gallery_nyc"
   },
   {
-    event_id: "evt_007",
-    source: "@nyc_workshop",
-    event_type: "education",
-    title: "Unlock your writing potential...",
-    description: "We're showing you this because you follow @nyc_workshop\n\nLearn storytelling techniques with award-winning author Sarah Chen.\n\nLocation: The Writers Room\n740 Broadway, New York, NY",
-    start_datetime: "2025-04-09T14:00:00",
-    end_datetime: "2025-04-09T16:00:00",
-    location_name: "@nyc_workshop",
-    neighborhood: "Union Square",
-    personalized_title: "Unlock your writing potential...",
-    calendar_title: "Unlock your writing potential..."
+    // Original data fields
+    original_event_id: "evt_007",
+    original_source: "@guggenheim",
+    original_event_type: "art",
+    original_title: "A Poem for Deep Thinkers...",
+    original_description: "A landmark, mid-career survey by Rashid Johnson at the Solomon R. Guggenheim Museum in New York City, featuring almost 90 works filling the rotunda, including the site‑specific installation \"Sanguine\" with an embedded piano and a dynamic sculptural stage activated by community events.",
+    original_start_datetime: "2025-04-18T00:00:00",
+    original_end_datetime: "2026-03-07T23:59:59",
+    original_location_name: "@guggenheim",
+    original_location_address: "1071 5th Ave, New York, NY 10128",
+    original_neighborhood: "Upper East Side",
+    original_url: "https://instagram.com/guggenheim",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Wander through this exhibition",
+    personalized_description: "We're showing you this because you follow @guggenheim\n\nA landmark, mid-career survey by Rashid Johnson at the Solomon R. Guggenheim Museum in New York City, featuring almost 90 works filling the rotunda, including the site‑specific installation \"Sanguine\" with an embedded piano and a dynamic sculptural stage activated by community events.\n\nLocation: @guggenheim\n1071 5th Ave, New York, NY 10128\n\nVisit @guggenheim on Instagram: https://instagram.com/guggenheim",
+    personalized_url: "https://instagram.com/guggenheim"
   },
   {
-    event_id: "evt_008",
-    source: "@nyc_fitness",
-    event_type: "fitness",
-    title: "Sweat session that delivers...",
-    description: "We're showing you this because you follow @nyc_fitness\n\nHigh-intensity interval training with certified trainers. All levels welcome.\n\nLocation: Barry's Bootcamp\n28 W 23rd St, New York, NY",
-    start_datetime: "2025-04-10T07:00:00",
-    end_datetime: "2025-04-10T08:00:00",
-    location_name: "@nyc_fitness",
-    neighborhood: "Flatiron",
-    personalized_title: "Sweat session that delivers...",
-    calendar_title: "Sweat session that delivers..."
+    // Original data fields
+    original_event_id: "evt_008",
+    original_source: "@springstudios",
+    original_event_type: "art",
+    original_title: "Julia Jo: New Paintings...",
+    original_description: "Return to Independent HQ with a solo presentation of new paintings by Julia Jo.",
+    original_start_datetime: "2025-05-08T00:00:00",
+    original_end_datetime: "2025-05-11T23:59:59",
+    original_location_name: "@springstudios",
+    original_location_address: "Spring Studios, New York City, NY",
+    original_neighborhood: "New York City",
+    original_url: "https://instagram.com/springstudios",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Browse this art fair",
+    personalized_description: "We're showing you this because you follow @springstudios\n\nReturn to Independent HQ with a solo presentation of new paintings by Julia Jo.\n\nLocation: @springstudios\nSpring Studios, New York City, NY\n\nVisit @springstudios on Instagram: https://instagram.com/springstudios",
+    personalized_url: "https://instagram.com/springstudios"
   },
   {
-    event_id: "evt_009",
-    source: "@nyc_food_tour",
-    event_type: "food",
-    title: "Food adventure in Chinatown...",
-    description: "We're showing you this because you follow @nyc_food_tour\n\nExplore hidden gems and authentic cuisine in NYC's Chinatown.\n\nLocation: Chinatown\nCanal St & Mott St, New York, NY",
-    start_datetime: "2025-04-11T11:00:00",
-    end_datetime: "2025-04-11T14:00:00",
-    location_name: "@nyc_food_tour",
-    neighborhood: "Chinatown",
-    personalized_title: "Food adventure in Chinatown...",
-    calendar_title: "Food adventure in Chinatown..."
-  },
-  {
-    event_id: "evt_010",
-    source: "@nyc_art",
-    event_type: "art",
-    title: "Art that makes you think...",
-    description: "We're showing you this because you follow @nyc_art\n\nGuided tour of the latest contemporary art exhibition.\n\nLocation: MoMA\n11 W 53rd St, New York, NY",
-    start_datetime: "2025-04-12T14:00:00",
-    end_datetime: "2025-04-12T16:00:00",
-    location_name: "@nyc_art",
-    neighborhood: "Midtown",
-    personalized_title: "Art that makes you think...",
-    calendar_title: "Art that makes you think..."
-  },
-  {
-    event_id: "evt_011",
-    source: "@nyc_networking",
-    event_type: "business",
-    title: "Network with the best...",
-    description: "We're showing you this because you follow @nyc_networking\n\nConnect with founders and investors in the tech ecosystem.\n\nLocation: WeWork 85 Broad\n85 Broad St, New York, NY",
-    start_datetime: "2025-04-13T18:00:00",
-    end_datetime: "2025-04-13T21:00:00",
-    location_name: "@nyc_networking",
-    neighborhood: "Financial District",
-    personalized_title: "Network with the best...",
-    calendar_title: "Network with the best..."
-  },
-  {
-    event_id: "evt_012",
-    source: "@nyc_theater",
-    event_type: "entertainment",
-    title: "Theater that moves you...",
-    description: "We're showing you this because you follow @nyc_theater\n\nAward-winning play 'The City That Never Sleeps' at the Public Theater.\n\nLocation: The Public Theater\n425 Lafayette St, New York, NY",
-    start_datetime: "2025-04-14T19:30:00",
-    end_datetime: "2025-04-14T21:30:00",
-    location_name: "@nyc_theater",
-    neighborhood: "East Village",
-    personalized_title: "Theater that moves you...",
-    calendar_title: "Theater that moves you..."
-  },
-  {
-    event_id: "evt_013",
-    source: "@nyc_meditation",
-    event_type: "wellness",
-    title: "Find your inner peace...",
-    description: "We're showing you this because you follow @nyc_meditation\n\nGuided meditation session for stress relief and mental clarity.\n\nLocation: MNDFL Meditation\n123 W 18th St, New York, NY",
-    start_datetime: "2025-04-15T12:00:00",
-    end_datetime: "2025-04-15T13:00:00",
-    location_name: "@nyc_meditation",
-    neighborhood: "Flatiron",
-    personalized_title: "Find your inner peace...",
-    calendar_title: "Find your inner peace..."
-  },
-  {
-    event_id: "evt_014",
-    source: "@nyc_dance",
-    event_type: "entertainment",
-    title: "Dance the night away...",
-    description: "We're showing you this because you follow @nyc_dance\n\nLearn salsa moves and dance the night away. Beginners welcome!\n\nLocation: Salsa Social\n234 W 42nd St, New York, NY",
-    start_datetime: "2025-04-16T20:00:00",
-    end_datetime: "2025-04-16T23:00:00",
-    location_name: "@nyc_dance",
-    neighborhood: "Times Square",
-    personalized_title: "Dance the night away...",
-    calendar_title: "Dance the night away, Jake..."
-  },
-  {
-    event_id: "evt_015",
-    source: "@nyc_volunteer",
-    event_type: "community",
-    title: "Make a difference today...",
-    description: "We're showing you this because you follow @nyc_volunteer\n\nHelp pack and distribute food to those in need.\n\nLocation: City Harvest\n150 52nd St, Brooklyn, NY",
-    start_datetime: "2025-04-17T09:00:00",
-    end_datetime: "2025-04-17T12:00:00",
-    location_name: "@nyc_volunteer",
-    neighborhood: "Sunset Park",
-    personalized_title: "Make a difference today...",
-    calendar_title: "Make a difference today..."
-  },
-  {
-    event_id: "evt_016",
-    source: "@nyc_photography",
-    event_type: "education",
-    title: "Capture the city's soul...",
-    description: "We're showing you this because you follow @nyc_photography\n\nLearn to capture NYC's energy through your lens.\n\nLocation: B&H Photo\n420 9th Ave, New York, NY",
-    start_datetime: "2025-04-18T10:00:00",
-    end_datetime: "2025-04-18T13:00:00",
-    location_name: "@nyc_photography",
-    neighborhood: "Chelsea",
-    personalized_title: "Capture the city's soul...",
-    calendar_title: "Capture the city's soul..."
-  },
-  {
-    event_id: "evt_017",
-    source: "@nyc_cycling",
-    event_type: "fitness",
-    title: "Park adventure on wheels...",
-    description: "We're showing you this because you follow @nyc_cycling\n\nGuided bike tour through Central Park's hidden gems.\n\nLocation: Central Park\nCentral Park, New York, NY",
-    start_datetime: "2025-04-19T09:00:00",
-    end_datetime: "2025-04-19T11:00:00",
-    location_name: "@nyc_cycling",
-    neighborhood: "Upper West Side",
-    personalized_title: "Park adventure on wheels...",
-    calendar_title: "Park adventure on wheels..."
-  },
-  {
-    event_id: "evt_018",
-    source: "@nyc_cooking",
-    event_type: "food",
-    title: "Master the art of pasta...",
-    description: "We're showing you this because you follow @nyc_cooking\n\nLearn to make authentic pasta from scratch with Chef Maria.\n\nLocation: Eataly\n200 5th Ave, New York, NY",
-    start_datetime: "2025-04-20T18:00:00",
-    end_datetime: "2025-04-20T21:00:00",
-    location_name: "@nyc_cooking",
-    neighborhood: "Flatiron",
-    personalized_title: "Master the art of pasta...",
-    calendar_title: "Master the art of pasta..."
-  },
-  {
-    event_id: "evt_019",
-    source: "@nyc_jazz",
-    event_type: "music",
-    title: "Jazz and brunch perfection...",
-    description: "We're showing you this because you follow @nyc_jazz\n\nSunday jazz brunch with live music and bottomless mimosas.\n\nLocation: Blue Note Jazz Club\n131 W 3rd St, New York, NY",
-    start_datetime: "2025-04-21T11:00:00",
-    end_datetime: "2025-04-21T14:00:00",
-    location_name: "@nyc_jazz",
-    neighborhood: "Greenwich Village",
-    personalized_title: "Jazz and brunch perfection...",
-    calendar_title: "Jazz and brunch perfection..."
+    // Original data fields
+    original_event_id: "evt_009",
+    original_source: "@independent_hq",
+    original_event_type: "art",
+    original_title: "16th Edition of Independent Art Fair...",
+    original_description: "YveYANG's inaugural presentation at Independent will feature new and recent works by Allan Rand, Huidi Xiang, and Xinran Liu.",
+    original_start_datetime: "2025-05-08T00:00:00",
+    original_end_datetime: "2025-05-11T23:59:59",
+    original_location_name: "@independent_hq",
+    original_location_address: "Spring Studios, Tribeca, New York, NY",
+    original_neighborhood: "Tribeca",
+    original_url: "https://instagram.com/independent_hq",
+    
+    // Personalized fields for calendar feed
+    personalized_title: "Explore this art fair",
+    personalized_description: "We're showing you this because you follow @independent_hq\n\nYveYANG's inaugural presentation at Independent will feature new and recent works by Allan Rand, Huidi Xiang, and Xinran Liu.\n\nLocation: @independent_hq\nSpring Studios, Tribeca, New York, NY\n\nVisit @independent_hq on Instagram: https://instagram.com/independent_hq",
+    personalized_url: "https://instagram.com/independent_hq"
   }
 ];
+
+// Example of how to use the function with a custom prompt
+// const customPrompt = "Create a friendly, casual title for this event that would make sense in a calendar. Include the venue name if possible.";
+// events.forEach(event => {
+//   event.personalized_title = generatePersonalizedTitle(event, customPrompt);
+// });
 
 module.exports = events; 

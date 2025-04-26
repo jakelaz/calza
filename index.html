@@ -3,196 +3,387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calza Calendar - NYC Events</title>
+    <title>Calza - Your Smart Calendar</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap">
     <style>
+        :root {
+            --color-primary: #4ECDC4;
+            --color-secondary: #7BDFF2;
+            --color-accent: #B5E48C;
+            --color-accent-alt: #FF9F1C;
+            --color-text: #2D3047;
+            --color-text-light: #4A4E69;
+            --color-background: #F7FBFC;
+            --color-white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            --gradient-accent: linear-gradient(135deg, var(--color-accent), var(--color-accent-alt));
+            --shadow-sm: 0 2px 8px rgba(78, 205, 196, 0.08);
+            --shadow-md: 0 4px 12px rgba(78, 205, 196, 0.12);
+            --shadow-lg: 0 8px 24px rgba(78, 205, 196, 0.16);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            background-image: 
+                radial-gradient(circle at 100% 0%, rgba(78, 205, 196, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(123, 223, 242, 0.03) 0%, transparent 50%);
+        }
+
+        .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 2rem;
-            background-color: #f5f5f5;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
+            padding: 60px 20px;
         }
-        .container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        .header {
             text-align: center;
-            width: 100%;
+            margin-bottom: 60px;
+            position: relative;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 1.5rem;
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(40px);
+            z-index: -1;
         }
-        .description {
-            color: #666;
-            margin-bottom: 2rem;
+
+        .header h1 {
+            font-size: 64px;
+            font-weight: 200;
+            margin-bottom: 30px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
         }
-        .button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-            transition: opacity 0.2s;
-            background-color: #000;
-            margin-bottom: 2rem;
-            cursor: pointer;
-            border: none;
+
+        .header p {
+            font-size: 20px;
+            color: var(--color-text-light);
+            margin-bottom: 20px;
+            font-weight: 300;
         }
-        .button:hover {
-            opacity: 0.9;
-        }
+
         .input-group {
-            margin-bottom: 2rem;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
         }
-        .instagram-input {
-            padding: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            width: 100%;
-            max-width: 300px;
-            margin-bottom: 1rem;
+
+        .input-group::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: var(--gradient-primary);
+            border-radius: 40px;
+            opacity: 0.1;
+            filter: blur(20px);
+            z-index: -1;
         }
-        .instagram-input:focus {
+
+        .input-group input {
+            flex: 1;
+            padding: 16px 24px;
+            font-size: 16px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
             outline: none;
-            border-color: #000;
+            transition: var(--transition);
+            font-family: inherit;
         }
+
+        .input-group input:focus {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-sm);
+            background: var(--color-white);
+        }
+
+        .input-group button {
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-white);
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .input-group button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(78, 205, 196, 0.1);
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            background: var(--color-white);
+        }
+
+        .feature-box h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--color-text);
+            font-weight: 400;
+        }
+
+        .feature-box p {
+            color: var(--color-text-light);
+            margin: 0;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
         .step {
             display: none;
+            text-align: center;
+            margin-top: 40px;
         }
+
         .step.active {
             display: block;
         }
+
         .analysis-item {
-            margin: 1rem 0;
-            padding: 1rem;
-            background: #f8f8f8;
-            border-radius: 8px;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.5s ease;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            font-weight: 300;
+            color: var(--color-text-light);
+            border: 1px solid rgba(78, 205, 196, 0.1);
         }
+
         .analysis-item.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        .loading-dots::after {
-            content: '';
-            animation: loading 1.5s infinite;
-        }
-        @keyframes loading {
-            0% { content: '.'; }
-            33% { content: '..'; }
-            66% { content: '...'; }
-        }
+
         .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
         }
+
         .stat-item {
-            padding: 1rem;
-            background: #f8f8f8;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(78, 205, 196, 0.1);
         }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            background: var(--color-white);
+        }
+
         .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #000;
+            font-size: 36px;
+            font-weight: 200;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
         }
+
         .stat-label {
-            color: #666;
-            font-size: 0.9rem;
+            color: var(--color-text-light);
+            font-size: 15px;
+            font-weight: 300;
         }
-        .update-note {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 1rem;
-            padding: 1rem;
-            background: #f8f8f8;
-            border-radius: 8px;
+
+        .calendar-button {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .calendar-button a {
             display: inline-block;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-white);
+            background: var(--gradient-primary);
+            text-decoration: none;
+            border-radius: 30px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calendar-button a:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .calendar-button p {
+            color: var(--color-text-light);
+            margin-top: 16px;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        #step3 h2 {
+            font-size: 36px;
+            font-weight: 200;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        #step3 p {
+            color: var(--color-text-light);
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .analysis-item {
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Step 1: Instagram Handle Input -->
-        <div class="step active" id="step1">
-            <h1>Calza Calendar - NYC Events</h1>
-            <p class="description">
-                Enter your Instagram handle to discover events from your favorite NYC spots.
-            </p>
-            <div class="input-group">
-                <input type="text" class="instagram-input" placeholder="@yourhandle" id="instagramHandle">
-                <button class="button" onclick="startAnalysis()">Continue</button>
-            </div>
+        <div class="header">
+            <h1>Calza</h1>
+            <p>Calza connects your Instagram interests to your calendar.</p>
+            <p style="font-size: 18px; margin-top: 10px;">Events from places you follow appear naturally in your day.</p>
+            <p style="font-size: 16px; margin-top: 10px;">No app. No notifications. Just possibilities.</p>
+        </div>
+        
+        <div class="input-group">
+            <input type="text" id="instagramHandle" placeholder="Share your Instagram handle to find events from places you already follow" autocomplete="off">
+            <button onclick="startAnalysis()">Get Started</button>
         </div>
 
         <!-- Step 2: Analysis Process -->
         <div class="step" id="step2">
-            <h1>Analyzing Your Network</h1>
             <div class="analysis-item" id="analysis1">
-                Finding venues you follow...
+                Finding events that align with your interests...
             </div>
             <div class="analysis-item" id="analysis2">
-                Categorizing event types...
+                Reading your Instagram connections...
             </div>
             <div class="analysis-item" id="analysis3">
-                Calculating event frequency...
+                Finding the places that resonate with you...
             </div>
             <div class="analysis-item" id="analysis4">
-                Generating personalized calendar...
+                Creating your personalized event stream...
             </div>
         </div>
 
         <!-- Step 3: Results and Subscription -->
         <div class="step" id="step3">
-            <h1>Your Personalized Calendar is Ready</h1>
+            <h2>Connected.</h2>
+            <p>Events from your followed venues will appear in your calendar.<br>No pressure, just awareness of what's happening around you.</p>
             <div class="stats">
                 <div class="stat-item">
                     <div class="stat-number">25</div>
-                    <div class="stat-label">Upcoming Events</div>
+                    <div class="stat-label">upcoming events from places you follow</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">8</div>
-                    <div class="stat-label">Venues</div>
+                    <div class="stat-label">venues connected to your calendar</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">5</div>
-                    <div class="stat-label">Categories</div>
+                    <div class="stat-label">different types of gatherings found</div>
                 </div>
             </div>
-            <p class="description">
-                Head back to your calendar app to check on what your network is up to...
-            </p>
-            <a href="webcal://calza-calendar-api.onrender.com/calendar.ics" class="button">
-                Subscribe with Apple Calendar
-            </a>
-            <!-- <div class="update-note">
-                Updates will appear in your calendar within 5-15 minutes when the app is open, or up to 24 hours when closed.
-            </div> -->
+            <div class="calendar-button">
+                <a href="webcal://calza-calendar-api.onrender.com/calendar.ics">Add to your Apple Calendar</a>
+                <p>Events will appear alongside your day, there when you're ready.</p>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-box">
+                <h3>Smart Event Detection</h3>
+                <p>We find events happening at places you already follow</p>
+            </div>
+            <div class="feature-box">
+                <h3>Seamless Integration</h3>
+                <p>Events integrate with your existing schedule, easy to notice or ignore</p>
+            </div>
+            <div class="feature-box">
+                <h3>Always Up to Date</h3>
+                <p>Seeing events alongside your day makes reconnection feel natural</p>
+            </div>
         </div>
     </div>
 
     <script>
         function startAnalysis() {
-            const handle = document.getElementById('instagramHandle').value;
+            const handle = document.getElementById('instagramHandle').value.trim();
             if (!handle) {
                 alert('Please enter your Instagram handle');
                 return;
             }
 
             // Show step 2
-            document.getElementById('step1').classList.remove('active');
             document.getElementById('step2').classList.add('active');
 
             // Animate analysis items
